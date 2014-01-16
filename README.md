@@ -116,10 +116,7 @@ d3.select('#spiderview')
 
 ```
 
-*3.* And walah! The chart should appear!
-
-![Spiderview chart](/graphics/spiderview.png)
-
+*3.* The chart should now appear!
 
 ## API Documentation
 
@@ -142,6 +139,10 @@ grunt test
 Runs jshint on the MTD3 source code
 
 
+
+
+
+
 ```
 grunt development
 ```
@@ -150,6 +151,11 @@ Launches a web server on your localhost at port 9001 that serves up the index.ht
 Anytime the /src/mtd3.js code is modified, jshint is automatically run against the source code.
 
 Great for testing changes while developing!
+
+
+
+
+
 
 
 ```
@@ -162,9 +168,9 @@ Generates a production version of the source code and CSS. The code is generated
 
 To submit a contribution, open a pull request against the master branch.
 
-* Please makes sure that your code is 100% compliant with the ```grunt test``` command before submitting a pull request! *
+* *Please makes sure that your code is 100% compliant with the ```grunt test``` command before submitting a pull request!*
 
-* Also, if you are testing your changes on the index.html file included within this repository, please do not include any changes to that file in your pull request! *
+* *Also, if you are testing your changes on the index.html file included within this repository, please do not include any changes to that file in your pull request!*
 
 This process will probably change in the future.
 
