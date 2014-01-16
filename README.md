@@ -168,9 +168,9 @@ Generates a production version of the source code and CSS. The code is generated
 
 To submit a contribution, open a pull request against the master branch.
 
-* *Please makes sure that your code is 100% compliant with the ```grunt test``` command before submitting a pull request!*
+* **Please makes sure that your code is 100% compliant with the ```grunt test``` command before submitting a pull request!**
 
-* *Also, if you are testing your changes on the index.html file included within this repository, please do not include any changes to that file in your pull request!*
+* **Also, if you are testing your changes on the index.html file included within this repository, please do not include any changes to that file in your pull request!**
 
 This process will probably change in the future.
 
