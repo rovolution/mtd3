@@ -1,0 +1,39 @@
+[
+	{
+		"name" : "Shapiro",
+		"price of oil" : 7,
+		"GDP" : 8,
+		"consumer confidence" : 4,
+		"length" : 10,
+		"a" : 12,
+		"b" : 23,
+		"c" : 31,
+		"d" : 22,
+		"mtd3-color" : "#1BD3E0"
+	}
+	,
+	{
+		"name" : "Fryer",
+		"price of oil" : 6,
+		"GDP" : 8,
+		"consumer confidence" : 1,
+		"length" : 2,
+		"a" : 11,
+		"b" : 22,
+		"c" : 33,
+		"d" : 44,
+		"mtd3-color" : "#F2F277"
+	},
+	{
+		"name" : "Duflo",
+		"price of oil" : 4,
+		"GDP" : 6,
+		"consumer confidence" : 4,
+		"length" : 23,
+		"a" : 11,
+		"b" : 22,
+		"c" : 33,
+		"d" : 44,
+		"mtd3-color" : "#FC0019"
+	}
+]

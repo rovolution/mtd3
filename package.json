@@ -1,0 +1,25 @@
+{
+  "name": "mtd3",
+  "version": "1.0.0",
+  "description": "D3 based visualization library that provides canned but customizable versions of complex charts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "d3.js",
+    "mtd3",
+    "MITRE",
+    "visualization"
+  ],
+  "author": "Rohit Kalkur",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-open": "~0.2.2"
+  }
+}

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Page for MTD3 charts</title>
+    <script type='text/javascript' src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script type='text/javascript' src="http://d3js.org/d3.v2.min.js" charset="utf-8"></script> -->
+    <script type='text/javascript' src="src/mtd3.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/mtd3.css"></link>
+    <style type="text/css">
+        .d3-chart {
+          display: block;
+          height: 600px;
+          width: 1200px;
+        }
+
+        #heatmap {
+          height: 200px;
+        }
+
+        svg text {
+          font-size: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    
+<!--     <h2>Parallel Coordinates</h2>
+    <svg id="parCoord" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg> -->
+    
+    <!-- <h2>Box Whiskers</h2>
+    <svg id="boxWhisker" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg> -->
+<!-- 
+    <h2>Horizontal Bar Chart</h2>
+    <svg id="horBar" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg> -->
+
+    <h2>Spiderview</h2>
+    <svg id="spiderview" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg> 
+
+ <!--    <h2>Polygon</h2>
+    <svg id="polygon" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>
+ -->
+    <h2>Line Chart</h2>
+    <svg id="lineChart" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>
+
+    <h2>Histogram</h2>
+    <svg id="histogram" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>
+
+    <h2>Heat Map</h2>
+    <svg id="heatmap" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>  
+
+    <script type="text/javascript">
+
+        /*****************************************
+                  
+                        Heat Map
+
+         Description:
+          -Input data
+            {
+              "name" : "1990",
+              "data" : [
+                { 
+                  "value" : 0.1,
+                  "datum" : "0" // NOTE: "datum" property can be set to any valid JSON data type
+                },
+                {
+                  "value" : 0.5,
+                  "datum" : "1"
+                },
+                {
+                  "value" : 1.0,
+                  "datum" : "2"
+                }
+              ]
+            }
+          - API methods:                
+            -width
+            -height
+            -margin
+            -colorScaleDomain
+            -colorScaleRange
+            -squareSize
+            -bindEventHandlerToSquares
+            -unbindEventHandlers
+          -Behavior
+            -Will fit to container size (height)
+            -Will have CSS transition when hovered over
+
+
+        *****************************************/
+        d3.json("data/heatmap-data.json", function(data) {
+          var heatMap = mtd3.charts.HeatMap();
+          
+          heatMap
+            .squareSize(25)
+            .tooltips(function(d,i) {
+              return "Run ID: " + d.datum;
+            })
+            .bindEventHandlerToSquares('click', function(d,i) {
+              console.log(d.datum);
+            });
+
+          d3.select("#heatmap")
+            .datum(data)
+          .transition().duration(1200).call(heatMap);
+
+          // setTimeout(function() {
+          //   var newData = {
+          //     "name" : "2001",
+          //     "data" : [
+          //       { 
+          //         "value" : 0.5,
+          //         "datum" : "0"
+          //       },
+          //       {
+          //         "value" : 0.5,
+          //         "datum" : "1"
+          //       },
+          //       {
+          //         "value" : 1,
+          //         "datum" : "5"
+          //       }
+          //     ]
+          //   };
+
+          //   d3.select("#heatmap")
+          //     .datum(newData)
+          //   .transition().duration(1200).call(heatMap);
+
+          // }, 5000); //End of setTimeout
+
+        });
+
+        /*****************************************
+                  
+                        Histogram
+
+        *****************************************/
+        d3.json("data/large-histogram-data.json", function(data) {
+
+          var histogram = mtd3.charts.Histogram()
+              ,data = data.map(function(d) {
+                return parseFloat(d['returns']);
+              });
+
+          histogram
+            .margin({top: 30, right: 10, bottom: 20, left: 40})
+            .ticks(40)
+            ;
+
+          function drawHistogramChart(chartData) {
+            d3.select("#histogram")
+              .datum(chartData)
+            .transition().duration(1200).call(histogram);
+          }
+
+          drawHistogramChart(data);
+
+          // setTimeout(function() {
+          //   var histoData = [0.4519734385889024,0.5501377314096316,0.4613403685856611,0.6313098712824285,0.6842449263203889];
+
+          //   drawHistogramChart(histoData);
+
+          // }, 10000);
+        });
+
+
+        /*****************************************
+                  
+                        Line Chart
+
+        *****************************************/
+        d3.json("data/line-chart-data.json", function(data) {
+          
+          var lineChart = mtd3.charts.LineChart(),
+              scaleExtent = 1.06;
+
+          lineChart
+            .margin({top: 30, right: 10, bottom: 20, left: 40})
+            .xAxisScaleMaxValMultipler(scaleExtent)
+            .yAxisScaleMaxValMultipler(scaleExtent)
+            .eventTooltips(function(d,i) {
+              return d.data;
+            });
+          
+
+          function drawLineChart(chartData) {
+            d3.select("#lineChart")
+              .datum(chartData)
+            .transition().duration(1200).call(lineChart);            
+          }
+
+          drawLineChart(data);
+
+          // setTimeout(function() {
+          //   var lineData = {
+          //     "data" : [
+          //       {
+          //         "name" : "Line 1",
+          //         "data" : [
+          //           {
+          //             "x" : 0,
+          //             "y" : 1
+          //           },
+          //           {
+          //             "x" : 10,
+          //             "y" : 20
+          //           },
+          //           {
+          //             "x" : 20,
+          //             "y" : 40
+          //           },
+          //           {
+          //             "x" : 30,
+          //             "y" : 160
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         "name" : "Line 1",
+          //         "data" : [
+          //           {
+          //             "x" : 0,
+          //             "y" : 20
+          //           },
+          //           {
+          //             "x" : 10,
+          //             "y" : 5
+          //           },
+          //           {
+          //             "x" : 20,
+          //             "y" : 100
+          //           },
+          //           {
+          //             "x" : 30,
+          //             "y" : 22
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         "name" : "Line 3",
+          //         "data" : [
+          //           {
+          //             "x" : 0,
+          //             "y" : 10
+          //           },
+          //           {
+          //             "x" : 10,
+          //             "y" : 7
+          //           },
+          //           {
+          //             "x" : 20,
+          //             "y" : 120
+          //           },
+          //           {
+          //             "x" : 30,
+          //             "y" : 13
+          //           }
+          //         ]
+          //       }
+          //     ],
+          //     "events" : [
+          //       {
+          //         "x" : 3,
+          //         "data" : "Event o"
+          //       }
+          //     ]
+          //   };
+
+          //   drawLineChart(lineData);
+          // }, 10000);
+
+        });
+
+
+
+        /*****************************************
+                  
+                        Box Whisker Chart
+
+        *****************************************/
+        d3.json("data/box-whisker.json", function(data) {
+          var testChart = mtd3.charts.MultiBoxWhiskerChart()
+            .margin({
+              top: 30,
+              right: 10,
+              bottom: 10,
+              left: 185 + 40
+            })
+            .domain([740, 1070])
+            .spacingBetweenBoxPlots(370);
+
+          d3.select('#boxWhisker')
+              .datum(data)
+          .transition().duration(1200).call(testChart);
+
+          // setInterval(function() {
+          //   testChart.domain([680, 1070]);
+
+          //   d3.select('#boxWhisker')
+          //     .datum(
+          //         [
+          //           {
+          //             "label" : '2001',
+          //             "min" : 740,
+          //             "q1" : 850,
+          //             "q2" : 940,
+          //             "q3" : 990,
+          //             "max" : 1070
+          //           },
+          //           {
+          //             "label" : '2002',
+          //             "min" : 680,
+          //             "q1" : 720,
+          //             "q2" : 750,
+          //             "q3" : 800,
+          //             "max" : 900
+          //           },
+          //           {
+          //             "label" : '2003',
+          //             "min" : 680,
+          //             "q1" : 720,
+          //             "q2" : 750,
+          //             "q3" : 800,
+          //             "max" : 900
+          //           }
+          //         ]
+          //   )
+          //   .call(testChart.duration(1000));
+          // }, 2000);
+
+        });
+
+        /**** Test of HorizontalPercentOverTimeBarChart ****/
+        d3.json("data/horiz-bar-chart-large-data-set.json", function(data) {
+           //HORIZONTAL CHART TEST
+          var testChart = mtd3.charts.HorizontalPercentOverTimeBarChart();
+
+          d3.select('#horBar')
+              .datum(data)
+          .transition().duration(1200).call(testChart);
+        });
+
+        // /**** Test of ParallellCoordinatesChart ****/
+        d3.json("data/parallel-coord-data.json", function(data) {
+          var testChart = mtd3.charts.ParallelCoordinatesChart();
+
+          d3.select('#parCoord')
+              .datum(data)
+          .transition().duration(1200).call(testChart);
+        });
+
+        /**** Test of SpiderViewChart ****/
+        d3.json("data/spiderview.json", function(data) {
+          var testChart = mtd3.charts.SpiderViewChart();
+
+          testChart
+            .sameDimensionScale(true);
+
+          d3.select('#spiderview')
+              .datum(data)
+          .transition().duration(1200).call(testChart);
+        }); 
+
+        /**************** N-SIDED POLYGON GENERATION *******************/
+         var testChart3 = mtd3.components.Polygon({
+            numSides : 5,
+            radius : 130
+         });
+
+         d3.select('#polygon').transition().duration(1200).call(testChart3);
+
+
+    </script>
+
+  </body>
+</html>

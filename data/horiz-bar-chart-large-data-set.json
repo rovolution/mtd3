@@ -1,0 +1,194 @@
+[
+    {
+        "name": "Category 1",
+        "color": "purple",
+        "data": [
+            {
+                "groupName": "Group 1",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            },
+            {
+                "groupName": "Group 2",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Category 2",
+        "color": "yellow",
+        "data": [
+            {
+                "groupName": "Group 1",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            },
+            {
+                "groupName": "Group 2",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Category 3",
+        "color": "red",
+        "data": [
+            {
+                "groupName": "Group 1",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            },
+            {
+                "groupName": "Group 2",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Category 4",
+        "color": "green",
+        "data": [
+            {
+                "groupName": "Group 1",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            },
+            {
+                "groupName": "Group 2",
+                "groupData": [
+                    {
+                        "date": "2012",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2013",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2014",
+                        "percent": 0.25
+                    },
+                    {
+                        "date": "2015",
+                        "percent": 0.25
+                    }
+                ]
+            }
+        ]
+    }
+]
