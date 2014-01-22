@@ -172,6 +172,8 @@ To submit a contribution, open a pull request against the master branch.
 
 * **Also, if you are testing your changes on the index.html file included within this repository, please do not include any changes to that file in your pull request!**
 
+* **Please squash your commits together before submitting a pull request! For more information on squashing, [please see this linked article](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html).**
+
 This process will probably change in the future.
 
 
@@ -181,8 +183,14 @@ This process will probably change in the future.
 - [Jason Davies](https://github.com/jasondavies)
 - [NVD3](https://github.com/novus/nvd3) by Novus Partners
 - [The MITRE Corporation](http://www.mitre.org/)
+	* Matt Koehler: mkoehler {at} mitre {dot} org
+	* Zoe Henscheid: zhenscheid {at} mitre {dot} org
+	* Ivan Ramiscal: iramiscal {at} mitre {dot} org
+	* Marie Francesca: maf {at} mitre {dot} org
 
 
 ## Author
 
-[Rohit Kalkur](http://rovolutionary.com/)
+- Rohit Kalkur
+	* URL: http://www.rovolutionary.com/
+	* Email: rohit {dot} kalkur {at} gmail {dot} com

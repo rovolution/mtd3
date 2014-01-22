@@ -1597,7 +1597,7 @@
 					graphContainer.append('svg:g').attr('class', 'legendWrap');
 
 					var legend = mtd3.components.Legend().width(availableWidth).margin({top : 11, bottom : 0, left : availableWidth/3.5, right : 0}),
-							legendData = data.map(function(d) { return { "name" : d.name, "color" : interpolateColor(d) }; });
+						legendData = data.map(function(d) { return { "name" : d.name, "color" : interpolateColor(d) }; });
 
 					graphContainer.select('.legendWrap')
 							.datum(legendData)
@@ -1622,7 +1622,16 @@
 				} //End of extractDimensionAndCreateScales()
 
 				function extractDimensions() {
-					dimensions = d3.keys(data[0]).filter(function(d) { return propertyIsAValidDimension(d); });
+					var uniqueProperties = d3.set();
+					
+					data.forEach(function(d) {
+						var keys = d3.keys(d);
+						keys.forEach(function(key) {
+							uniqueProperties.add(key);
+						});
+					});
+
+					dimensions = uniqueProperties.values().filter(function(d) { return propertyIsAValidDimension(d); });
 				}
 				
 				function createScales() {
@@ -1631,9 +1640,9 @@
 					} else {
 						dimensions.forEach(function(dimName) { createUniqueDimensionScale(dimName); });
 					}
-         }
+				}
 
-        function createSameDimensionScale() {
+				function createSameDimensionScale() {
 					var domain = calculateSameDimensionDomain();
 					dimensionScales[sameDimensionScaleKeyVal] = createAxisScale(domain);
 				}
@@ -1646,7 +1655,9 @@
 				}
 
 				function createUniqueDimensionScale(dimName) {
-					var domain = data.map(function(p) { return +p[dimName]; }).sort(mtd3.helpers.sortNumber);
+					var domain = data.map(function(p) { return +p[dimName]; })
+						.sort(mtd3.helpers.sortNumber)
+						.filter(function(num) { return !isNaN(num); });
 					dimensionScales[dimName] = createAxisScale(domain);
 				}
 
@@ -1654,10 +1665,11 @@
 					return d3.scale.ordinal()
 						.domain(_domain)
 						.rangeBands([0, radius], 1);
-        }
+				}
 
 				function calculateRotationAngles() {
 					var indexToDegreesConversionFactor = 360/dimensions.length;
+					
 					dimensions.forEach(function(dimName, index) {
 						dimensionRotationAngles[dimName] = (index + 1) * indexToDegreesConversionFactor;
 					});
@@ -1665,65 +1677,111 @@
 
 				function drawDimensionAxes() {
 					var dimensionAxes = chartContainer.append("g").attr("class", "dimensions")
-																.selectAll("g.axis")
-																	.data(dimensions)
-																.enter().append("g")
-																	.attr("class", "axis")
-																	.attr("transform", function(dim) { return "rotate(" + dimensionRotationAngles[dim] + " 0 0)"; })
-																	.each(function(d) {
-																		var axisScale = getAxisScale(d),
-																		axis = d3.svg.axis()
-																						.scale(axisScale)
-																						.orient("top");
-																		d3.select(this).call(axis);
-																});
+							.selectAll("g.axis")
+								.data(dimensions)
+							.enter().append("g")
+								.attr("class", "axis")
+								.attr("transform", function(dim) { return "rotate(" + dimensionRotationAngles[dim] + " 0 0)"; })
+								.each(function(dim) {
+									/* Apply scale to axis and draw ticks */
+									var axisScale = getAxisScale(dim);
+									var axisD3Elem = d3.select(this);
+
+									var axis = d3.svg.axis()
+													.scale(axisScale)
+													.orient("top");
+									axisD3Elem.call(axis);
+
+									/* Rotate ticks */
+									axisD3Elem
+										.selectAll("g.tick > text")
+											.attr("transform", function() {
+												var rotationAngle = dimensionRotationAngles[dim];
+												var xTranslation;
+												var yTranslation;
+
+												if(rotationAngle === 90) { 
+													xTranslation = 4;
+													yTranslation = 3;
+												}
+												else if(rotationAngle === 180) { 
+													xTranslation = 0;
+													yTranslation = 7;
+												}
+												else if(rotationAngle === 270) { 
+													xTranslation = -4;
+													yTranslation = 3;
+												}
+												else if(rotationAngle > 90 && rotationAngle < 180) {
+													xTranslation = 3;
+													yTranslation = 7;
+												}
+												else if(rotationAngle > 180 && rotationAngle < 270) {
+													xTranslation = -3;
+													yTranslation = 3;
+												}
+												else {
+													xTranslation = 0;
+													yTranslation = 0;
+												}
+
+												var rotation = "rotate(" + (360 - rotationAngle) + " 0 -9)";
+												var translation = "translate(" + xTranslation + ", " + yTranslation + ")";
+												
+												return rotation + " " + translation;
+											});
+
+								});
 
 					dimensionAxes.append("g").attr("class", "axis-label")
-						.attr("transform", "translate(" + radius*1.04 + ")")
-					.append("text")
-						.attr("text-anchor", function(dim) {
-							var rotationAngle = dimensionRotationAngles[dim];
-							if(rotationAngle === 90 || rotationAngle === 270) { return 'middle'; }
-							else if(rotationAngle > 90 && rotationAngle < 270) { return 'end'; }
-							else { return 'start'; }
-						})
-						.attr("transform", function(dim) { return "rotate(" + (360 - dimensionRotationAngles[dim]) + " 0 0)"; })
+							.attr("transform", "translate(" + radius*1.04 + ")")
+						.append("text")
+							.attr("text-anchor", function(dim) {
+								var rotationAngle = dimensionRotationAngles[dim];
+								if(rotationAngle === 90 || rotationAngle === 270) { return 'middle'; }
+								else if(rotationAngle > 90 && rotationAngle < 270) { return 'end'; }
+								else { return 'start'; }
+							})
+							.attr("transform", function(dim) { 
+								return "rotate(" + (360 - dimensionRotationAngles[dim]) + " 0 0)"; 
+							})
 							.text(function(d) { return d; });
-						} //End of drawDimensionAxes()
 
-        function drawSpiderGridlinesAndGraphBorder() {
+				} //End of drawDimensionAxes()
+
+				function drawSpiderGridlinesAndGraphBorder() {
 					drawGridlines();
 					drawGraphBorder();
+				}	
 
-          function drawGridlines() {
-						var gridlines = chartContainer.append("g").attr("class", "gridlines"),
-								dimensionWithLargestDomain = getDimensionWithLargestDomain(),
-								largestDomainDimensionScale = dimensionScales[dimensionWithLargestDomain];
+				function drawGridlines() {
+					var gridlines = chartContainer.append("g").attr("class", "gridlines"),
+							dimensionWithLargestDomain = getDimensionWithLargestDomain(),
+							largestDomainDimensionScale = dimensionScales[dimensionWithLargestDomain];
 
-						for (var i=0; i<=largestDomainDimensionScale.domain().length; i++) {
-							var radius = largestDomainDimensionScale.range()[i];
-							var gridline = mtd3.components.Polygon({numSides : dimensions.length, radius : radius })
-								.strokeColor('grey')
-								.fillOpacity(0)
-								.strokeOpacity(0.3)
-								.strokeWidth(1.5);
-							var gridlineContainer = gridlines.append("g").attr("class", "gridline");
-							plotPolygon(gridlineContainer, gridline);
-						}
-					}
-			
-					function drawGraphBorder() {
-						var border = mtd3.components.Polygon({numSides : dimensions.length, radius : radius})
+					for (var i=0; i<=largestDomainDimensionScale.domain().length; i++) {
+						var radius = largestDomainDimensionScale.range()[i];
+						var gridline = mtd3.components.Polygon({numSides : dimensions.length, radius : radius })
+							.strokeColor('grey')
 							.fillOpacity(0)
-							.strokeWidth(2);
-						var borderContainer = chartContainer.append("g").attr("class", "border");
-						plotPolygon(borderContainer, border);
+							.strokeOpacity(0.3)
+							.strokeWidth(1.5);
+						var gridlineContainer = gridlines.append("g").attr("class", "gridline");
+						plotPolygon(gridlineContainer, gridline);
 					}
+				}	
 
-					function plotPolygon(container, polygon) {
-						container.datum(null).transition().duration(animationDuration).call(polygon);
-					}
-        }
+				function drawGraphBorder() {
+					var border = mtd3.components.Polygon({numSides : dimensions.length, radius : radius})
+						.fillOpacity(0)
+						.strokeWidth(2);
+					var borderContainer = chartContainer.append("g").attr("class", "border");
+					plotPolygon(borderContainer, border);
+				}
+
+				function plotPolygon(container, polygon) {
+					container.datum(null).transition().duration(animationDuration).call(polygon);
+				}
 
 				function getDimensionWithLargestDomain() {
 					if(sameDimensionScale) {
@@ -1760,17 +1818,28 @@
 				}
 
 				function generatePolygonCoordsFromInputData(d) {
-					return d3.keys(d).filter(propertyIsAValidDimension).map(function(dimName) {
-					var coordRadius = calculateCoordRadius(dimName, d),
-							coordAngleInDegrees = dimensionRotationAngles[dimName],
+					return dimensions.map(function(dimName) {
+						var coordRadius = calculateCoordRadius(dimName, d),
+							coordAngleInDegrees = 360 - dimensionRotationAngles[dimName],
 							angleInRadians = mtd3.helpers.degreesToRadians(coordAngleInDegrees);
-							return { 'x': coordRadius * Math.cos(angleInRadians), 'y': coordRadius * Math.sin(angleInRadians) };
+
+						return { 
+							'x': coordRadius * Math.cos(angleInRadians),
+							'y': coordRadius * Math.sin(angleInRadians) 
+						};
 					});
 				}
 
 				function calculateCoordRadius(dimName, d) {
 					var dimScale = getAxisScale(dimName);
-					return dimScale(d[dimName]);
+					var dimValueInData = d[dimName];
+					var coordRadius = dimScale(dimValueInData);
+
+					if(coordRadius && dimValueInData) {
+						return coordRadius;
+					} else {
+						return 0;
+					}
 				}
 
 				function getAxisScale(d) {
@@ -1783,18 +1852,19 @@
 
 				function plotSpiders(spiderData) {
 					var spiders = chartContainer.append("g").attr("class", "spiders");
+					
 					spiders.selectAll("g.spider")
-                .data(spiderData)
-              .enter().append("g")
-					.attr("class", "spider")
-					.each(function(d) {
-						var spider = mtd3.components.Polygon()
-                      .fillOpacity(0.3)
-                      .fillColor(d['color'])
-                      .strokeColor(d['color'])
-                      .strokeWidth(1);
-            d3.select(this).datum(d['coords']).transition().duration(animationDuration).call(spider);
-          });
+							.data(spiderData)
+						.enter().append("g")
+							.attr("class", "spider")
+							.each(function(d) {
+								var spider = mtd3.components.Polygon()
+									.fillOpacity(0.3)
+									.fillColor(d['color'])
+									.strokeColor(d['color'])
+									.strokeWidth(1);
+								d3.select(this).datum(d['coords']).transition().duration(animationDuration).call(spider);
+							});
         }
 
         function propertyIsAValidDimension(d) { return (d !== "name" && d !== "mtd3-color"); }

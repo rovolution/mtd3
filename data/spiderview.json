@@ -1,39 +1,42 @@
 [
 	{
-		"name" : "Shapiro",
-		"price of oil" : 7,
-		"GDP" : 8,
-		"consumer confidence" : 4,
-		"length" : 10,
-		"a" : 12,
-		"b" : 23,
-		"c" : 31,
-		"d" : 22,
-		"mtd3-color" : "#1BD3E0"
-	}
-	,
-	{
-		"name" : "Fryer",
-		"price of oil" : 6,
-		"GDP" : 8,
-		"consumer confidence" : 1,
-		"length" : 2,
-		"a" : 11,
-		"b" : 22,
-		"c" : 33,
-		"d" : 44,
-		"mtd3-color" : "#F2F277"
+		"name" : "P. Manning",
+		"Passing Yards" : 5477,
+		"TD/INT Ratio" : 5.5,
+		"Yards Per Attempt" : 8.3, 
+		"Completion %" : 68.3,
+		"Passer Rating": 115.1,
+		"Games Started": 16,
+		"mtd3-color" : "#FF9933"
 	},
 	{
-		"name" : "Duflo",
-		"price of oil" : 4,
-		"GDP" : 6,
-		"consumer confidence" : 4,
-		"length" : 23,
-		"a" : 11,
-		"b" : 22,
-		"c" : 33,
-		"d" : 44,
-		"mtd3-color" : "#FC0019"
+		"name" : "A. Smith",
+		"Passing Yards" : 3313,
+		"TD/INT Ratio" : 3.3,
+		"Completion %" : 60.6,
+		"Yards Per Attempt" : 6.5,
+		"Passer Rating": 89.1,
+		"Games Started": 15,
+		"mtd3-color" : "#FF8080"
+	},
+	{
+		"name" : "T. Pryor",
+		"Passing Yards" : 1798,
+		"TD/INT Ratio" : 0.6,
+		"Yards Per Attempt" : 6.6, 
+		"Completion %" : 57.4,
+		"Passer Rating": 69.1,
+		"Games Started": 9,
+		"mtd3-color" : "#000000"
+	},
+	{
+		"name" : "P. Rivers",
+		"Passing Yards" : 4478,
+		"TD/INT Ratio" : 2.9,
+		"Yards Per Attempt" : 8.2, 
+		"Completion %" : 69.5,
+		"Passer Rating": 105.5,
+		"Games Started": 16,
+		"mtd3-color" : "#33CCFF"
 	}
 ]
