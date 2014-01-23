@@ -74,39 +74,44 @@ spiderChart
 */
 var chartData = [
 	{
-		"name" : "Shapiro",
-		"price of oil" : 7,
-		"GDP" : 8,
-		"consumer confidence" : 4,
-		"length" : 10,
-		"a" : 12,
-		"b" : 23,
-		"c" : 31,
-		"d" : 22
-	}
-	,
-	{
-		"name" : "Fryer",
-		"price of oil" : 6,
-		"GDP" : 8,
-		"consumer confidence" : 1,
-		"length" : 2,
-		"a" : 11,
-		"b" : 22,
-		"c" : 33,
-		"d" : 44
+		"name" : "P. Manning",
+		"Passing Yards" : 5477,
+		"TD/INT Ratio" : 5.5,
+		"Yards Per Attempt" : 8.3, 
+		"Completion %" : 68.3,
+		"Passer Rating": 115.1,
+		"Games Started": 16,
+		"mtd3-color" : "#FF9933" # Set custom color for spider
 	},
 	{
-		"name" : "Duflo",
-		"price of oil" : 4,
-		"GDP" : 6,
-		"consumer confidence" : 4,
-		"length" : 23,
-		"a" : 11,
-		"b" : 22,
-		"c" : 33,
-		"d" : 44,
-		"mtd3-color" : "#FC0019" # Set custom color for spider
+		"name" : "A. Smith",
+		"Passing Yards" : 3313,
+		"TD/INT Ratio" : 3.3,
+		"Completion %" : 60.6,
+		"Yards Per Attempt" : 6.5,
+		"Passer Rating": 89.1,
+		"Games Started": 15,
+		"mtd3-color" : "#FF8080"
+	},
+	{
+		"name" : "T. Pryor",
+		"Passing Yards" : 1798,
+		"TD/INT Ratio" : 0.6,
+		"Yards Per Attempt" : 6.6, 
+		"Completion %" : 57.4,
+		"Passer Rating": 69.1,
+		"Games Started": 9,
+		"mtd3-color" : "#000000"
+	},
+	{
+		"name" : "P. Rivers",
+		"Passing Yards" : 4478,
+		"TD/INT Ratio" : 2.9,
+		"Yards Per Attempt" : 8.2, 
+		"Completion %" : 69.5,
+		"Passer Rating": 105.5,
+		"Games Started": 16,
+		"mtd3-color" : "#33CCFF"
 	}
 ];
 
@@ -183,14 +188,14 @@ This process will probably change in the future.
 - [Jason Davies](https://github.com/jasondavies)
 - [NVD3](https://github.com/novus/nvd3) by Novus Partners
 - [The MITRE Corporation](http://www.mitre.org/)
-	* Matt Koehler: mkoehler {at} mitre {dot} org
-	* Zoe Henscheid: zhenscheid {at} mitre {dot} org
-	* Ivan Ramiscal: iramiscal {at} mitre {dot} org
-	* Marie Francesca: maf {at} mitre {dot} org
+	* Matt Koehler: *mkoehler {at} mitre {dot} org*
+	* Zoe Henscheid: *zhenscheid {at} mitre {dot} org*
+	* Ivan Ramiscal: *iramiscal {at} mitre {dot} org*
+	* Marie Francesca: *maf {at} mitre {dot} org*
 
 
 ## Author
 
 - Rohit Kalkur
 	* URL: http://www.rovolutionary.com/
-	* Email: rohit {dot} kalkur {at} gmail {dot} com
+	* Email: *rohit {dot} kalkur {at} gmail {dot} com*
