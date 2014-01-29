@@ -17,13 +17,22 @@ The following custom charts can be created:
 ![Spiderview](/graphics/spiderview.png)
 
 ### Heat Map
-* ![Heat Map](/graphics/heat-map.png)
+![Heat Map](/graphics/heat-map.png)
 
 ### Histogram
-* ![Histogram](/graphics/histogram.png)
+![Histogram](/graphics/histogram.png)
 
 ### Line Chart
-* ![Line Chart](/graphics/line-chart.png)
+![Line Chart](/graphics/line-chart.png)
+
+### Box and Whisker Plots
+![Box and Whisker Plots](/graphics/boxAndWhiskers.png)
+
+### Horizontal Percent Bar Chart
+![Horizontal Percent Bar Chart](/graphics/horizPerctBarChart.png)
+
+### Parallel Coordinates
+![Parallel Coordinates](/graphics/parallelCoordinates.png)
 
 
 ## Getting Started/Setup

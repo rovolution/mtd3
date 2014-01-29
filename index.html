@@ -361,6 +361,8 @@
            //HORIZONTAL CHART TEST
           var testChart = mtd3.charts.HorizontalPercentOverTimeBarChart();
 
+          testChart.margin({top: 30, right: 40, bottom: 20, left: 90});
+
           d3.select('#horBar')
               .datum(data)
           .transition().duration(1200).call(testChart);

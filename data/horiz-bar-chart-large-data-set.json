@@ -1,191 +1,191 @@
 [
     {
-        "name": "Category 1",
-        "color": "purple",
+        "name": "% of Students in class with Correct Answer",
+        "color": "#00E600",
         "data": [
             {
-                "groupName": "Group 1",
+                "groupName": "Mid-term Exam",
                 "groupData": [
                     {
-                        "date": "2012",
-                        "percent": 0.25
+                        "date": "Q.1",
+                        "percent": 0.8
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.2",
+                        "percent": 0.6
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.3",
+                        "percent": 0.8
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
+                        "date": "Q.4",
+                        "percent": 0.5
+                    },
+                    {
+                        "date": "Q.5",
+                        "percent": 0.2
+                    },
+                    {
+                        "date": "Q.6",
+                        "percent": 0.8
+                    },
+                    {
+                        "date": "Q.7",
+                        "percent": 0.5
+                    },
+                    {
+                        "date": "Q.8",
+                        "percent": 0.1
+                    },
+                    {
+                        "date": "Q.9",
+                        "percent": 0.1
+                    },
+                    {
+                        "date": "Q.10",
+                        "percent": 0.2
                     }
                 ]
             },
             {
-                "groupName": "Group 2",
+                "groupName": "Final Exam",
                 "groupData": [
                     {
-                        "date": "2012",
-                        "percent": 0.25
+                        "date": "Q.1",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.2",
+                        "percent": 0.3
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.3",
+                        "percent": 0.8
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
+                        "date": "Q.4",
+                        "percent": 0.7
+                    },
+                    {
+                        "date": "Q.5",
+                        "percent": 0.8
+                    },
+                    {
+                        "date": "Q.6",
+                        "percent": 0.9
+                    },
+                    {
+                        "date": "Q.7",
+                        "percent": 0.9
+                    },
+                    {
+                        "date": "Q.8",
+                        "percent": 0.8
+                    },
+                    {
+                        "date": "Q.9",
+                        "percent": 0.5
+                    },
+                    {
+                        "date": "Q.10",
+                        "percent": 0.6
                     }
                 ]
             }
         ]
     },
     {
-        "name": "Category 2",
-        "color": "yellow",
+        "name": "% of Students in class with Wrong Answer",
+        "color": "#FF1212",
         "data": [
             {
-                "groupName": "Group 1",
+                "groupName": "Mid-term Exam",
                 "groupData": [
-                    {
-                        "date": "2012",
-                        "percent": 0.25
+                        {
+                        "date": "Q.1",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.2",
+                        "percent": 0.4
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.3",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
+                        "date": "Q.4",
+                        "percent": 0.5
+                    },
+                    {
+                        "date": "Q.5",
+                        "percent": 0.8
+                    },
+                    {
+                        "date": "Q.6",
+                        "percent": 0.2
+                    },
+                    {
+                        "date": "Q.7",
+                        "percent": 0.5
+                    },
+                    {
+                        "date": "Q.8",
+                        "percent": 0.9
+                    },
+                    {
+                        "date": "Q.9",
+                        "percent": 0.9
+                    },
+                    {
+                        "date": "Q.10",
+                        "percent": 0.8
                     }
                 ]
             },
             {
-                "groupName": "Group 2",
+                "groupName": "Final Exam",
                 "groupData": [
                     {
-                        "date": "2012",
-                        "percent": 0.25
+                        "date": "Q.1",
+                        "percent": 0.8
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.2",
+                        "percent": 0.7
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.3",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Category 3",
-        "color": "red",
-        "data": [
-            {
-                "groupName": "Group 1",
-                "groupData": [
-                    {
-                        "date": "2012",
-                        "percent": 0.25
+                        "date": "Q.4",
+                        "percent": 0.3
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.5",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.6",
+                        "percent": 0.1
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
-                    }
-                ]
-            },
-            {
-                "groupName": "Group 2",
-                "groupData": [
-                    {
-                        "date": "2012",
-                        "percent": 0.25
+                        "date": "Q.7",
+                        "percent": 0.1
                     },
                     {
-                        "date": "2013",
-                        "percent": 0.25
+                        "date": "Q.8",
+                        "percent": 0.2
                     },
                     {
-                        "date": "2014",
-                        "percent": 0.25
+                        "date": "Q.9",
+                        "percent": 0.5
                     },
                     {
-                        "date": "2015",
-                        "percent": 0.25
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Category 4",
-        "color": "green",
-        "data": [
-            {
-                "groupName": "Group 1",
-                "groupData": [
-                    {
-                        "date": "2012",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2013",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2014",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2015",
-                        "percent": 0.25
-                    }
-                ]
-            },
-            {
-                "groupName": "Group 2",
-                "groupData": [
-                    {
-                        "date": "2012",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2013",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2014",
-                        "percent": 0.25
-                    },
-                    {
-                        "date": "2015",
-                        "percent": 0.25
+                        "date": "Q.10",
+                        "percent": 0.4
                     }
                 ]
             }
