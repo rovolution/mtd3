@@ -127,6 +127,9 @@
   font-size: 0.75em;
   font-weight: bold;
 }
+.mtd3.controls > .legend .series > circle {
+  cursor: pointer;
+}
 /* End of .mtd3 */
 .mtd3tooltip {
   position: absolute;

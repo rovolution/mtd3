@@ -24,31 +24,28 @@
   </head>
   <body>
     
-<!--     <h2>Parallel Coordinates</h2>
+    <h1>Charts</h1>
+
+    <h2>Parallel Coordinates</h2>
     <svg id="parCoord" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
-    </svg> -->
+    </svg>
     
-    <!-- <h2>Box Whiskers</h2>
+    <h2>Box Whiskers</h2>
     <svg id="boxWhisker" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
-    </svg> -->
-<!-- 
-    <h2>Horizontal Bar Chart</h2>
+    </svg>
+
+    <h2>Horizontal Percent Bar Chart</h2>
     <svg id="horBar" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
-    </svg> -->
+    </svg>
 
     <h2>Spiderview</h2>
     <svg id="spiderview" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
     </svg> 
 
- <!--    <h2>Polygon</h2>
-    <svg id="polygon" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
-      <defs></defs>
-    </svg>
- -->
     <h2>Line Chart</h2>
     <svg id="lineChart" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
@@ -63,6 +60,18 @@
     <svg id="heatmap" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs></defs>
     </svg>  
+
+    <h1>Components</h1>
+
+    <h2>Polygon</h2>
+    <svg id="polygon" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>
+
+    <h2>Controls</h2>
+    <svg id="controls" class="d3-chart" xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs></defs>
+    </svg>
 
     <script type="text/javascript">
 
@@ -310,40 +319,40 @@
               .datum(data)
           .transition().duration(1200).call(testChart);
 
-          // setInterval(function() {
-          //   testChart.domain([680, 1070]);
+          setInterval(function() {
+            testChart.domain([680, 1070]);
 
-          //   d3.select('#boxWhisker')
-          //     .datum(
-          //         [
-          //           {
-          //             "label" : '2001',
-          //             "min" : 740,
-          //             "q1" : 850,
-          //             "q2" : 940,
-          //             "q3" : 990,
-          //             "max" : 1070
-          //           },
-          //           {
-          //             "label" : '2002',
-          //             "min" : 680,
-          //             "q1" : 720,
-          //             "q2" : 750,
-          //             "q3" : 800,
-          //             "max" : 900
-          //           },
-          //           {
-          //             "label" : '2003',
-          //             "min" : 680,
-          //             "q1" : 720,
-          //             "q2" : 750,
-          //             "q3" : 800,
-          //             "max" : 900
-          //           }
-          //         ]
-          //   )
-          //   .call(testChart.duration(1000));
-          // }, 2000);
+            d3.select('#boxWhisker')
+              .datum(
+                  [
+                    {
+                      "label" : '2001',
+                      "min" : 740,
+                      "q1" : 850,
+                      "q2" : 940,
+                      "q3" : 990,
+                      "max" : 1070
+                    },
+                    {
+                      "label" : '2002',
+                      "min" : 680,
+                      "q1" : 720,
+                      "q2" : 750,
+                      "q3" : 800,
+                      "max" : 900
+                    },
+                    {
+                      "label" : '2003',
+                      "min" : 680,
+                      "q1" : 720,
+                      "q2" : 750,
+                      "q3" : 800,
+                      "max" : 900
+                    }
+                  ]
+            )
+            .call(testChart.duration(1000));
+          }, 2000);
 
         });
 
@@ -378,6 +387,12 @@
           .transition().duration(1200).call(testChart);
         }); 
 
+        /***********************************************/
+        /***                                         ***/
+        /***              Components                 ***/
+        /***                                         ***/
+        /***********************************************/
+
         /**************** N-SIDED POLYGON GENERATION *******************/
          var testChart3 = mtd3.components.Polygon({
             numSides : 5,
@@ -386,6 +401,14 @@
 
          d3.select('#polygon').transition().duration(1200).call(testChart3);
 
+         /**************** Controls *******************/
+         var controlsData = [ { name: 'Toggle Percent Labels', disabled: false } ];
+
+         var controls = mtd3.components.Controls().useSeriesCirclesAsBtns(true);
+
+          d3.select('#controls')
+              .datum(controlsData)
+            .call(controls);
 
     </script>
 

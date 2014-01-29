@@ -2,9 +2,9 @@
 	{
 		"name" : "P. Manning",
 		"Passing Yards" : 5477,
-		"TD/INT Ratio" : 5.5,
 		"Yards Per Attempt" : 8.3, 
 		"Completion %" : 68.3,
+		"TD/INT Ratio" : 5.5,
 		"Passer Rating": 115.1,
 		"Games Started": 16,
 		"mtd3-color" : "#FF9933"

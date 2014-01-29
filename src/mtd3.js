@@ -215,6 +215,7 @@
 		chart.useSeriesCirclesAsBtns = function(_) {
 			if(!arguments.length) return useSeriesCirclesAsBtns;
 			useSeriesCirclesAsBtns = _;
+			return chart;
 		};
 
 		return chart;
@@ -223,8 +224,8 @@
 
 	mtd3.components.Controls = function() {
 		var wrappedGraph = mtd3.components.Legend(),
-				buttonColor = "black",
-				onClickFn;
+			buttonColor = "black",
+			onClickFn;
 
 		function chart(selection) {
 			selection.each(function(data) {
@@ -234,10 +235,21 @@
 				chart.container = this;
 
 				if(data || data.length) {
+					var chartContainer = createChartContainer();
 					var formattedGraphData = formatData();
 
 					createGraphWithData(formattedGraphData);
 					bindEvents();
+				}
+
+				function createChartContainer() {
+					var controlsContainer = container.selectAll('g.controls').data([data]);
+					
+					controlsContainer.enter()
+						.append('g')
+							.attr('class', 'mtd3 controls');
+
+					return controlsContainer;
 				}
 
 				function formatData() {
@@ -247,13 +259,12 @@
 				}
 
 				function createGraphWithData(data) {
-					container.datum(data).call(wrappedGraph);
-					// height = wrappedGraph.height();
-					// width = wrappedGraph.width();
+					chartContainer.datum(data).call(wrappedGraph);
 				}
 
 				function bindEvents() {
 					wrappedGraph.dispatch.on('legendClick', function(d) {
+						if(onClickFn) { onClickFn(d); }
 						d.disabled = !d.disabled;
 						wrappedGraph.update();
 					});
@@ -495,12 +506,13 @@
 				height = null,
 				xScale = d3.scale.ordinal().rangePoints([0, width], 2),
 				barHeight = 20,
+				barWidth = 0,
 				//z = d3.scale.ordinal().range(["steelblue", "#ccc"]),
 				duration = 750,
 				delay = 25,
 				showLegend = true,
 				tooltips = true,
-				showControls = true,
+				showControls = false,
 				controls = null,
 				colorPalette = d3.scale.category20(),
 				percentLabels,
@@ -520,12 +532,16 @@
 
 				if(data || data.length) {
 					var graphContainer = createGraphContainer(),
-							formattedGraphData = formatDataForGraphInput(),
-							legendHeight = showLegend ? createLegendAndGetLegendHeight(formattedGraphData.legendData) : 0,
-							controlsHeight = showControls ? createControlsAndGetControlsHeight(0, legendHeight) : 0,
-							chartContainer = createChartContainer(0, legendHeight + controlsHeight);
+						formattedGraphData = formatDataForGraphInput(),
+						legendHeight = showLegend ? createLegendAndGetLegendHeight(formattedGraphData.legendData) : 0,
+						controlsHeight = showControls ? createControlsAndGetControlsHeight(0, legendHeight) : 0,
+						chartContainer = createChartContainer(0, legendHeight + controlsHeight);
 
-					createXAxis(formattedGraphData.uniqueDates);
+					/* Create data scales */
+					createXScale(formattedGraphData.uniqueDates);
+					
+					/* Draw chart contents */
+					createXAxis();
 					createYAxis(formattedGraphData.dataOrganizedByGroupName.length);
 					createBars(formattedGraphData.dataOrganizedByGroupName);
 
@@ -582,22 +598,31 @@
 
 				function createChartContainer(xOffset, yOffset) {
 					return graphContainer.append("svg:g")
-									.attr("class", "chart")
-									.attr("transform", "translate(" + xOffset + "," + yOffset + ")");
+						.attr("class", "chart")
+						.attr("transform", "translate(" + xOffset + "," + yOffset + ")");
 				}
 
-				function createXAxis(xAxisLabels) {
-					chartContainer.append("svg:g").attr("class", "x axis");
+				function createXScale(xAxisLabels) {
 					xScale = d3.scale.ordinal()
 						.rangePoints([0, availableWidth], 2)
 						.domain(xAxisLabels);
 
+					barWidth = xScale.range()[0];
+				}
+
+				function createXAxis() {
+					chartContainer.append("svg:g").attr("class", "x axis");
+
 					var xAxis = d3.svg.axis()
 						.scale(xScale)
-						.orient("top");
+							.orient("top");
 
-					var xAxisContainer = chartContainer.selectAll(".x.axis").transition().duration(duration).call(xAxis);
-					xAxisContainer.selectAll("text").attr("x", -(xScale()/2) ); //Center labels
+					chartContainer
+						.selectAll(".x.axis")
+							.transition().duration(duration)
+							.call(xAxis)
+						.selectAll("text")
+							.attr('dx', -(barWidth/2));
 				}
 
 				function createYAxis(numOfTicks) {
@@ -655,11 +680,11 @@
 						.attr("width", 0)
 						.transition()
 						.duration(duration)
-						.attr("width", function(d) { return calculateBarWidth(d.percent); });
+						.attr("width", function(d) { return calculateBarWidth(d); });
 
 					percentLabels = dataBars.append("svg:text")
 						.attr("y", barHeight / 1.5)
-						.attr("x", function(d) { return calculateBarWidth(d.percent) / 2; })
+						.attr("x", function(d) { return calculateBarWidth(d) / 2; })
 						.attr("text-anchor", "middle")
 						.text(function(d) { return d3.format("%")(d.percent); });
 				} //End of createBars()
@@ -667,21 +692,21 @@
 				function sortDataBarsInputData(data) {
 					return data.value.sort(function(a,b) {
 						var aDateIndex = formattedGraphData.uniqueDates.indexOf(a.date),
-								bDateIndex = formattedGraphData.uniqueDates.indexOf(b.date);
+							bDateIndex = formattedGraphData.uniqueDates.indexOf(b.date);
 
-								if (aDateIndex < bDateIndex) {
-									return -1;
-								} else if(aDateIndex > bDateIndex) {
-									return 1;
-								} else {
-									return compareByIndexInLegendArray(a,b);
-								}
+							if (aDateIndex < bDateIndex) {
+								return -1;
+							} else if(aDateIndex > bDateIndex) {
+								return 1;
+							} else {
+								return compareByIndexInLegendArray(a,b);
+							}
 					});
 				}
 
 				function compareByIndexInLegendArray(a,b) {
 					var aLegendIndex = mtd3.helpers.indexOfForObjectArrayByProperty(formattedGraphData.legendData, 'color', a.color),
-							bLegendIndex = mtd3.helpers.indexOfForObjectArrayByProperty(formattedGraphData.legendData, 'color', b.color);
+						bLegendIndex = mtd3.helpers.indexOfForObjectArrayByProperty(formattedGraphData.legendData, 'color', b.color);
 					if (aLegendIndex < bLegendIndex) {
 						return -1;
 					} else if(aLegendIndex > bLegendIndex) {
@@ -691,15 +716,15 @@
 					}
 				}
 
-        function calculateHorizontalOffsetForSegment(segmentData, i) {
+				function calculateHorizontalOffsetForSegment(segmentData, i) {
 					var horizontalOffset = 0;
 					if (i === 0) { currentHorizontalOffset = 0; }
-						horizontalOffset = currentHorizontalOffset;
-						currentHorizontalOffset+=calculateBarWidth(segmentData['percent']);
-						return horizontalOffset;
-        }
+					horizontalOffset = currentHorizontalOffset;
+					currentHorizontalOffset+=calculateBarWidth(segmentData);
+					return horizontalOffset;
+				}
 
-				function calculateBarWidth(percent) { return percent * xScale(); }
+				function calculateBarWidth(d) { return d.percent * barWidth; }
 
 				function createControlsAndGetControlsHeight(xOffset, yOffset) {
 						var controlsData = [ { name: 'Toggle Percent Labels', disabled: false } ];
@@ -708,7 +733,7 @@
 							.attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
 						controls = mtd3.components.Controls()
-							.width(availableWidth)
+								.width(availableWidth)
 							.useSeriesCirclesAsBtns(true);
 
 						graphContainer.select('.controlsWrap')
@@ -834,7 +859,6 @@
 		var margin = {top: 30, right: 10, bottom: 10, left: 50},
 				width = null,
 				height = null,
-				//xScale = null,
 				duration = 0,
 				domain = null,
 				value = Number,
@@ -865,7 +889,7 @@
 				}
 
 				function createGraphContainer() {
-					var wrap = container.selectAll("g.mtd31920").data([data]);
+					var wrap = container.selectAll("g.mtd3.box-whisker-graph").data([data]);
 					wrap.enter().append("svg:g")
 						.attr("class", "mtd3 box-whisker-graph")
 						.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -895,7 +919,7 @@
 							label : null
 						};
 
-						/*****************      Data Extraction      ****************/
+					// Data Extraction
 					if(d instanceof Array) {
 						d = d.map(value).sort(d3.ascending);
 						g = d3.select(this);
@@ -1325,12 +1349,12 @@
 						.attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
 					controls = mtd3.components.Controls()
-											.width(availableWidth)
-											.useSeriesCirclesAsBtns(true);
+							.width(availableWidth)
+						.useSeriesCirclesAsBtns(true);
 
 					graphContainer.select('.controlsWrap')
-												.datum(controlsData)
-												.call(controls);
+						.datum(controlsData)
+					.call(controls);
 
 					var controlsHeight = controls.height() * 1.7;
 					availableHeight-=controlsHeight;
@@ -1412,59 +1436,73 @@
 									.data(dimensions)
 								.enter().append("svg:g")
 									.attr("class", "dimension")
-									.attr("transform", function(d) { return "translate(" + xScale(d) + ")"; })
-									.call(d3.behavior.drag()
-										.on("dragstart", function(d) {
-											dragging[d] = this.__origin__ = xScale(d);
-											background.attr("visibility", "hidden");
-										})
-										.on("drag", function(d) {
-											dragging[d] = Math.min(availableWidth, Math.max(0, this.__origin__ += d3.event.dx));
-											foreground.attr("d", path);
-											dimensions.sort(function(a, b) { return position(a) - position(b); });
-											xScale.domain(dimensions);
-											dimensionDomElements.attr("transform", function(d) { return "translate(" + position(d) + ")"; });
-										})
-										.on("dragend", function(d) {
-											delete this.__origin__;
-											delete dragging[d];
-											transition(d3.select(this)).attr("transform", "translate(" + xScale(d) + ")");
-											transition(foreground)
-												.attr("d", path);
-											background
-													.attr("d", path)
-													.transition()
-													.delay(500)
-													.duration(0)
-													.attr("visibility", null);
-										}));
+									.attr("transform", function(d) { return "translate(" + xScale(d) + ")"; });
 
-							// Add an axis and title.
-							dimensionDomElements.append("svg:g")
-									.attr("class", "axis")
-									.each(function(d) {
-										var axis = d3.svg.axis().orient("left");
-										d3.select(this).call(axis.scale(dimensionScales[d]));
-									})
-									.append("svg:text")
-										.attr("text-anchor", "middle")
-										.attr("y", -9)
-										.text(String);
+						// Add an axis and title.
+						dimensionDomElements.append("svg:g")
+								.attr("class", "axis")
+								.each(function(d) {
+									var axis = d3.svg.axis().orient("left");
+									d3.select(this).call(axis.scale(dimensionScales[d]));
+								})
+								.append("svg:text")
+									.attr("text-anchor", "middle")
+									.attr("y", -9)
+									.text(String);
 
-							drawBrushes();
-							function transition(g) { return g.transition().duration(500); }
+						// Bind event handlers for dragging
+						dimensionDomElements
+							.call(d3.behavior.drag()
+								.on("dragstart", function(d) {
+									dragging[d] = this.__origin__ = xScale(d);
+									background.attr("visibility", "hidden");
+								})
+								.on("drag", function(d) {
+									dragging[d] = Math.min(availableWidth, Math.max(0, this.__origin__ += d3.event.dx));
+									foreground.attr("d", path);
+									dimensions.sort(function(a, b) { return position(a) - position(b); });
+									xScale.domain(dimensions);
+									dimensionDomElements.attr("transform", function(d) { return "translate(" + position(d) + ")"; });
+								})
+								.on("dragend", function(d) {
+									delete this.__origin__;
+									delete dragging[d];
+									transition(d3.select(this)).attr("transform", "translate(" + xScale(d) + ")");
+									transition(foreground)
+										.attr("d", path);
+									background
+											.attr("d", path)
+											.transition()
+											.delay(500)
+											.duration(0)
+											.attr("visibility", null);
+								})
+							);
+
+						drawBrushes();
+
+						function transition(g) { return g.transition().duration(500); }
 
 					} //End of createDimensionAxes()
 
 					function drawBrushes() {
 							dimensionDomElements.append("svg:g")
-									.attr("class", "brush")
-									.each(function(d) { d3.select(this).call(dimensionScales[d].brush = d3.svg.brush().y(dimensionScales[d]).on("brush", filterDataLines)); })
+								.attr("class", "brush")
+								.each(function(d) { 
+									d3.select(this).call(dimensionScales[d].brush = 
+										d3.svg.brush()
+											.y(dimensionScales[d])
+											.on("brushstart", stopPropagation)
+											.on("brushend", stopPropagation)
+											.on("brush", filterDataLines)
+									);
+								})
 								.selectAll("rect")
 									.attr("x", -8)
 									.attr("width", 16);
 
 							filterDataLines();
+							function stopPropagation() { d3.event.sourceEvent.stopPropagation(); }
 					}
 
 					function filterDataLines() {
@@ -1488,13 +1526,20 @@
 
 					function position(d) {
 						var v = dragging[d];
-						return v === null ? xScale(d) : v;
+						if(v) {
+							return v;
+						} else {
+							return xScale(d);
+						}
 					}
 
 					// Returns the path for a given data point.
 					function path(d) {
-						var line = d3.svg.line();
-						return line(dimensions.map(function(p) { return [position(p), dimensionScales[p](d[p])]; }));
+						var line = d3.svg.line()(dimensions.map(function(p) {
+							var dimScale = dimensionScales[p];
+							return [position(p), dimScale(d[p])];
+						}));
+						return line;
 					}
 
 					//Returns a color code for a datapoint
